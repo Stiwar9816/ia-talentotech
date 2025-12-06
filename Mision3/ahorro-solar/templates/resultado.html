@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Resultado - SolarTech{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="bg-gradient-to-br from-teal-100 via-cyan-100 to-blue-100 dark:from-gray-800 dark:via-gray-900 dark:to-black min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div class="bg-white dark:bg-gray-800 p-10 rounded-2xl shadow-xl w-full max-w-2xl text-center transition-all duration-300 hover:shadow-2xl border border-gray-100 dark:border-gray-700" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-teal-800 dark:text-teal-400 mb-6">Resultado del Ahorro</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <!-- Prediction Box -->
+          <div class="bg-teal-50 dark:bg-teal-900/30 p-6 rounded-xl border border-teal-100 dark:border-teal-800">
+              <p class="text-lg text-gray-600 dark:text-gray-300 mb-2">
+                Ahorro estimado mensual:
+              </p>
+              <div class="text-3xl font-extrabold text-teal-600 dark:text-teal-400 mb-2">
+                {{prediccion}}
+              </div>  
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                Este cálculo es una estimación basada en los datos proporcionados.
+              </p>
+          </div>
+
+          <!-- Impact Box -->
+          <div class="bg-green-50 dark:bg-green-900/30 p-6 rounded-xl border border-green-100 dark:border-green-800 flex flex-col justify-center items-center">
+              <h3 class="font-bold text-green-800 dark:text-green-400 mb-4">Impacto Ambiental Mensual</h3>
+              <div class="flex space-x-4">
+                  <div class="text-center" title="Árboles equivalentes plantados">
+                      <div class="text-3xl">🌳</div>
+                      <div class="text-sm font-bold text-gray-700 dark:text-gray-300 mt-1">~{{ arboles }} Árboles</div>
+                  </div>
+                  <div class="text-center" title="CO2 evitado">
+                      <div class="text-3xl">🚗</div>
+                      <div class="text-sm font-bold text-gray-700 dark:text-gray-300 mt-1">-{{ co2 }}kg CO2</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="mb-8 h-64">
+          <canvas id="savingsChart"></canvas>
+      </div>
+
+      <a href="{{url_for('formulario')}}" class="inline-block w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition duration-300 transform hover:scale-[1.02] shadow-md">
+        Calcular nuevamente
+      </a>
+    </div>
+</div>
+
+<script>
+    // Extract numeric value from prediction string (e.g., "$1.000.000 COP")
+    const predictionStr = "{{prediccion}}";
+    // Remove non-numeric chars except dots (for thousands) and convert to number
+    // Assuming format like $1.000.000 COP, we remove $ and COP, then remove dots to parse
+    const numericValue = parseFloat(predictionStr.replace(/[^0-9]/g, ''));
+    
+    const ctx = document.getElementById('savingsChart').getContext('2d');
+    
+    // Calculate projections
+    const monthly = numericValue;
+    const year1 = monthly * 12;
+    const year5 = year1 * 5;
+    const year10 = year1 * 10;
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['1 Mes', '1 Año', '5 Años', '10 Años'],
+            datasets: [{
+                label: 'Ahorro Acumulado Estimado (COP)',
+                data: [monthly, year1, year5, year10],
+                backgroundColor: [
+                    'rgba(45, 212, 191, 0.6)', // teal-400
+                    'rgba(59, 130, 246, 0.6)', // blue-500
+                    'rgba(147, 51, 234, 0.6)', // purple-600
+                    'rgba(234, 179, 8, 0.6)'   // yellow-500
+                ],
+                borderColor: [
+                    'rgb(45, 212, 191)',
+                    'rgb(59, 130, 246)',
+                    'rgb(147, 51, 234)',
+                    'rgb(234, 179, 8)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Proyección de Ahorro a Largo Plazo',
+                    color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#374151', // gray-200 : gray-700
+                    font: {
+                        size: 16
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#4b5563', // gray-400 : gray-600
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        }
+                    },
+                    grid: {
+                        color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#4b5563' // gray-400 : gray-600
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

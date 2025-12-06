@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - SolarTech{% endblock %}
+
+{% block content %}
+<!-- Hero Slider Section -->
+<div class="relative w-full h-[500px] overflow-hidden">
+    <!-- Slider Container -->
+    <div id="slider" class="flex transition-transform duration-700 ease-in-out h-full">
+        <div class="w-full flex-shrink-0 relative">
+            <img src="{{ url_for('static', filename='slider_1.png') }}" class="w-full h-full object-cover" alt="Paneles Solares">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center text-white px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">El Futuro es Solar</h1>
+                    <p class="text-xl md:text-2xl mb-8 drop-shadow-md">Descubre cuánto puedes ahorrar con energía limpia.</p>
+                    <a href="{{ url_for('formulario') }}" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105 shadow-lg">Calcular Ahorro</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex-shrink-0 relative">
+            <img src="{{ url_for('static', filename='slider_2.png') }}" class="w-full h-full object-cover" alt="Dashboard Energía">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center text-white px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Control Total</h1>
+                    <p class="text-xl md:text-2xl mb-8 drop-shadow-md">Monitorea y optimiza tu consumo energético.</p>
+                    <a href="{{ url_for('formulario') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105 shadow-lg">Empezar Ahora</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex-shrink-0 relative">
+            <img src="{{ url_for('static', filename='slider_3.png') }}" class="w-full h-full object-cover" alt="Ciudad Verde">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center text-white px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Sostenibilidad</h1>
+                    <p class="text-xl md:text-2xl mb-8 drop-shadow-md">Contribuye a un planeta más verde y limpio.</p>
+                    <a href="{{ url_for('formulario') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105 shadow-lg">Únete al Cambio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slider Controls -->
+    <button id="prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full transition-all">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
+    <button id="next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full transition-all">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+</div>
+
+<!-- Info Cards Section -->
+<div class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12" data-aos="fade-up">¿Por qué elegir Energía Solar?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+            <div class="p-8">
+                <div class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mb-4 text-teal-600 dark:text-teal-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Ahorro Económico</h3>
+                <p class="text-gray-600 dark:text-gray-300">Reduce drásticamente tu factura de electricidad generando tu propia energía. El retorno de inversión es cada vez más rápido.</p>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+            <div class="p-8">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4 text-blue-600 dark:text-blue-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Impacto Ambiental</h3>
+                <p class="text-gray-600 dark:text-gray-300">Disminuye tu huella de carbono utilizando una fuente de energía renovable, inagotable y no contaminante.</p>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+            <div class="p-8">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-4 text-purple-600 dark:text-purple-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Independencia Energética</h3>
+                <p class="text-gray-600 dark:text-gray-300">Protégete de los aumentos en las tarifas de luz y asegura el suministro energético de tu hogar.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Info Section -->
+<div class="bg-gray-50 dark:bg-gray-900 py-16 transition-colors duration-300">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2" data-aos="fade-right">
+                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Energía Solar" class="rounded-2xl shadow-2xl">
+            </div>
+            <div class="md:w-1/2" data-aos="fade-left">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">La Energía del Futuro, Hoy</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4 text-lg">
+                    La energía solar fotovoltaica es una de las fuentes de energía más limpias y abundantes disponibles. Al instalar paneles solares, no solo estás ahorrando dinero, sino que estás invirtiendo en un futuro sostenible para las próximas generaciones.
+                </p>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center text-gray-700 dark:text-gray-300">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Vida útil de más de 25 años.
+                    </li>
+                    <li class="flex items-center text-gray-700 dark:text-gray-300">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Mantenimiento mínimo requerido.
+                    </li>
+                    <li class="flex items-center text-gray-700 dark:text-gray-300">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Valorización de tu propiedad.
+                    </li>
+                </ul>
+                <a href="{{ url_for('about') }}" class="text-teal-600 dark:text-teal-400 font-bold hover:text-teal-800 dark:hover:text-teal-300 transition-colors flex items-center">
+                    Conoce más sobre nosotros
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="bg-teal-900 text-white py-16">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div data-aos="zoom-in" data-aos-delay="0">
+                <div class="text-4xl font-bold text-teal-400 mb-2">50%</div>
+                <div class="text-teal-100">Ahorro Promedio</div>
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="100">
+                <div class="text-4xl font-bold text-teal-400 mb-2">10k+</div>
+                <div class="text-teal-100">Hogares Solares</div>
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="200">
+                <div class="text-4xl font-bold text-teal-400 mb-2">5M</div>
+                <div class="text-teal-100">Toneladas de CO2 Evitadas</div>
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="300">
+                <div class="text-4xl font-bold text-teal-400 mb-2">24/7</div>
+                <div class="text-teal-100">Monitoreo Inteligente</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const slider = document.getElementById('slider');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let currentIndex = 0;
+    const slidesCount = 3;
+
+    function updateSlider() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slidesCount;
+        updateSlider();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slidesCount) % slidesCount;
+        updateSlider();
+    });
+
+    // Auto slide
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % slidesCount;
+        updateSlider();
+    }, 5000);
+</script>
+{% endblock %}
