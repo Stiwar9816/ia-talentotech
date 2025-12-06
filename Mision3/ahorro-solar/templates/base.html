@@ -9,6 +9,12 @@
         tailwind.config = {
             darkMode: 'class',
         }
+        // Check for dark mode preference immediately to prevent FOUC and ensure correct initial state
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     </script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='favicon.png')}}" />

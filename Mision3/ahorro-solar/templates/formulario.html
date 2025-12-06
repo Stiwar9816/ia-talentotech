@@ -12,7 +12,7 @@
         <div>
           <div class="flex justify-between items-center mb-1">
             <label class="block text-sm font-medium text-gray-600 dark:text-gray-300">Ubicación</label>
-            <button type="button" onclick="document.getElementById('zoneModal').classList.remove('hidden')" class="text-xs text-teal-600 dark:text-teal-400 hover:underline">¿Cuál es mi zona?</button>
+            <button type="button" onclick="document.getElementById('zoneModal').classList.remove('hidden')" class="text-xs text-teal-600 dark:text-teal-400 hover:underline">Seleccionar en mapa</button>
           </div>
           <select name="ubicacion" class="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent bg-gray-50 dark:bg-gray-700 dark:text-white transition duration-200">
             <option value="zona_1">Zona 1 (Norte)</option>
@@ -28,13 +28,15 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Costo de instalación ($)</label>
-          <input type="number" name="costo_instalacion" class="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent bg-gray-50 dark:bg-gray-700 dark:text-white transition duration-200" placeholder="Ej. 5000000" required />
+          <input type="number" step="any" name="costo_instalacion" class="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent bg-gray-50 dark:bg-gray-700 dark:text-white transition duration-200" placeholder="Ej. 5000000" required />
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Energía generada (KWh)</label>
-          <input type="number" name="energia_generada" class="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent bg-gray-50 dark:bg-gray-700 dark:text-white transition duration-200" placeholder="Ej. 350" required />
+          <input type="number" step="any" name="energia_generada" class="w-full px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent bg-gray-50 dark:bg-gray-700 dark:text-white transition duration-200" placeholder="Ej. 350" required />
         </div>
+
+
 
         <div class="pt-2">
           <input type="submit" value="Predecir ahorro" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-[1.02] shadow-md" />
@@ -43,32 +45,147 @@
     </div>
 </div>
 
-<!-- Zone Modal -->
+<!-- Zone Modal with Map -->
 <div id="zoneModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-gray-800 rounded-xl max-w-lg w-full p-6 shadow-2xl" data-aos="zoom-in">
+    <div class="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full p-6 shadow-2xl" data-aos="zoom-in">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Guía de Zonas</h3>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Selecciona tu ubicación</h3>
             <button onclick="document.getElementById('zoneModal').classList.add('hidden')" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
-        <div class="space-y-4 text-gray-600 dark:text-gray-300">
-            <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-100 dark:border-yellow-800">
-                <h4 class="font-bold text-yellow-800 dark:text-yellow-400 mb-1">Zona 1 (Norte)</h4>
-                <p class="text-sm">Región Caribe e Insular. Alta radiación solar todo el año.</p>
-            </div>
-            <div class="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-100 dark:border-green-800">
-                <h4 class="font-bold text-green-800 dark:text-green-400 mb-1">Zona 2 (Centro)</h4>
-                <p class="text-sm">Región Andina. Radiación moderada a alta, clima templado.</p>
-            </div>
-            <div class="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-100 dark:border-blue-800">
-                <h4 class="font-bold text-blue-800 dark:text-blue-400 mb-1">Zona 3 (Sur)</h4>
-                <p class="text-sm">Región Amazónica y Pacífica. Radiación variable debido a la nubosidad.</p>
-            </div>
-        </div>
-        <button onclick="document.getElementById('zoneModal').classList.add('hidden')" class="w-full mt-6 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-            Entendido
+        
+        <div id="map" class="w-full h-96 rounded-lg border border-gray-200 dark:border-gray-600 mb-4"></div>
+        
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">
+            Haz clic en el mapa para seleccionar tu ubicación aproximada. El sistema detectará automáticamente tu zona solar.
+        </p>
+
+        <button onclick="confirmLocation()" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 rounded-lg transition-colors flex justify-center items-center gap-2" id="confirmBtn">
+            <span>Confirmar Ubicación</span>
         </button>
     </div>
 </div>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    let map;
+    let marker;
+
+    function initMap() {
+        if (map) return; // Already initialized
+
+        // Center on Colombia
+        map = L.map('map').setView([4.5709, -74.2973], 5);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+
+            // Update marker
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                marker = L.marker(e.latlng).addTo(map);
+            }
+
+            // Determine Zone based on Latitude (Approximate for Colombia)
+            let zone = '';
+            let zoneName = '';
+            
+            if (lat > 8) {
+                zone = 'zona_1'; // North
+                zoneName = 'Zona 1 (Norte)';
+            } else if (lat >= 2) {
+                zone = 'zona_2'; // Center
+                zoneName = 'Zona 2 (Centro)';
+            } else {
+                zone = 'zona_3'; // South
+                zoneName = 'Zona 3 (Sur)';
+            }
+
+            // Update Select Dropdown
+            const select = document.querySelector('select[name="ubicacion"]');
+            select.value = zone;
+
+            // Show popup
+            marker.bindPopup(`<b>${zoneName}</b><br>Lat: ${lat.toFixed(2)}`).openPopup();
+            
+            // Store coordinates for API call
+            window.selectedLat = lat;
+            window.selectedLon = lng;
+        });
+    }
+
+    async function confirmLocation() {
+        const modal = document.getElementById('zoneModal');
+        const btn = document.getElementById('confirmBtn');
+        
+        if (!window.selectedLat || !window.selectedLon) {
+            alert("Por favor selecciona una ubicación en el mapa primero.");
+            return;
+        }
+        
+        // UI Loading State
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Calculando radiación...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/api/solar-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    lat: window.selectedLat,
+                    lon: window.selectedLon
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Update Energy Input
+                const energyInput = document.querySelector('input[name="energia_generada"]');
+                energyInput.value = data.estimated_generation;
+                
+                // Highlight the input to show it changed
+                energyInput.classList.add('ring-2', 'ring-green-500');
+                setTimeout(() => energyInput.classList.remove('ring-2', 'ring-green-500'), 2000);
+                
+                // Close modal
+                modal.classList.add('hidden');
+            } else {
+                alert('Error obteniendo datos solares: ' + (data.error || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error de conexión al obtener datos solares.');
+        } finally {
+            // Reset Button
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+
+
+    // Initialize map when modal is opened
+    document.querySelector('button[onclick*="zoneModal"]').addEventListener('click', function() {
+        // Small delay to ensure modal is visible before map renders (fixes sizing issues)
+        setTimeout(() => {
+            initMap();
+            map.invalidateSize();
+        }, 100);
+    });
+
+</script>
 {% endblock %}
